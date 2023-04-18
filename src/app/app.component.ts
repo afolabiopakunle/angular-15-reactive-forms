@@ -25,28 +25,32 @@ export class AppComponent implements OnInit {
       }),
       gender: new FormControl(1),
       hobbies: new FormArray([
-        new FormGroup({
-          name: new FormControl('', Validators.required),
-          level: new FormControl('', Validators.required),
-        }),
+        this.newHobby()
       ]),
     });
 
-    this.addHobby();
   }
 
   onSubmit() {
     console.log(this.signUpForm.value);
   }
 
+  newHobby() {
+    return new FormGroup({
+      name: new FormControl('', Validators.required),
+      level: new FormControl('', Validators.required),
+    })
+  }
+
   addHobby() {
-    // const hubbyGroup = new FormGroup(
-    // );
-    // (this.signUpForm.get('hobbies') as FormArray).push(hubbyGroup);
-    // console.log('Hubby added')
+    (this.signUpForm.get('hobbies') as FormArray).push(this.newHobby());;
+  }
+
+  removeHobby(i) {
+    (this.signUpForm.get('hobbies') as FormArray).removeAt(i)
   }
 
   get hubbyArray() {
-    return this.signUpForm.get('hobbies')['controls'];
+    return this.signUpForm.get('hobbies') as FormArray
   }
 }

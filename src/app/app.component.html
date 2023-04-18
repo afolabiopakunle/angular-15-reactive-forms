@@ -53,24 +53,57 @@
               [value]="gender.value"
             />{{ gender.title }}
           </label>
-        </div> <br>
-        <div formArrayName='hobbies'>
-          <ng-container *ngFor="let hobby of hubbyArray; let i = index">
-            <div [formGroupName]='hobby'>
-            <div class="form-group">
-              <label for="hobby">Hobby</label>
-            <input id='hobby' type="text" class='form-control' formControlName=''>
+        </div>
+        <br />
+        <div formArrayName="hobbies">
+          <div
+            *ngFor="let hobby of hubbyArray.controls; let i = index"
+            [formGroupName]="i"
+          >
+            <div>
+              <div class="form-group">
+                <label for="hobby">Hobby</label>
+                <input
+                  id="hobby"
+                  type="text"
+                  class="form-control"
+                  formControlName="name"
+                />
+              </div>
+              <div class="form-group">
+                <label for="hobby">Level</label>
+                <input
+                  id="hobby"
+                  type="text"
+                  class="form-control"
+                  style="width: 50%"
+                  formControlName="level"
+                />
+              </div>
             </div>
-          </div>
-          </ng-container>
-          <button 
-          class="btn-sm btn btn-warning"
-          (click)='addHobby()'
-          >Add More Hobbies</button> <br><br>
 
+            <button
+              type="button"
+              class="btn btn-danger btn-sm"
+              (click)="removeHobby(i)"
+            >
+              - Remove Hubby
+            </button>
+          </div>
+
+          <br /><br />
+          <button
+            type="button"
+            class="btn-sm btn btn-warning"
+            (click)="addHobby()"
+          >
+            + Add More Hobbies
+          </button>
+          <br /><br />
         </div>
         <button class="btn btn-primary" type="submit">Submit</button>
       </form>
+      <br />
       <pre>{{ signUpForm.value | json }}</pre>
     </div>
   </div>
