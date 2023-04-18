@@ -7,7 +7,6 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-
   genders = [
     { value: 1, title: 'Male' },
     { value: 2, title: 'Female' },
@@ -25,20 +24,29 @@ export class AppComponent implements OnInit {
         email: new FormControl('', [Validators.required, Validators.email]),
       }),
       gender: new FormControl(1),
-      hobbies: new FormArray([])
-    })
+      hobbies: new FormArray([
+        new FormGroup({
+          name: new FormControl('', Validators.required),
+          level: new FormControl('', Validators.required),
+        }),
+      ]),
+    });
+
+    this.addHobby();
   }
 
   onSubmit() {
-    console.log(this.signUpForm.value)
+    console.log(this.signUpForm.value);
   }
 
-  createHobby() {
-    const control = new FormControl(null, Validators.required);
-    (this.signUpForm.get('hobbies') as FormArray).push(control)
+  addHobby() {
+    // const hubbyGroup = new FormGroup(
+    // );
+    // (this.signUpForm.get('hobbies') as FormArray).push(hubbyGroup);
+    // console.log('Hubby added')
   }
 
-  get hubbies(): FormArray {
-    return this.signUpForm.controls["hubbies"] as FormArray;
+  get hubbyArray() {
+    return this.signUpForm.get('hobbies')['controls'];
   }
 }

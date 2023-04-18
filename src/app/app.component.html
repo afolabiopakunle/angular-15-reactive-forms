@@ -39,7 +39,7 @@
                 signUpForm.get('userData.email').invalid
               "
             >
-              Email is required
+              Email is required now
             </div>
           </div>
         </div>
@@ -54,12 +54,24 @@
             />{{ gender.title }}
           </label>
         </div> <br>
-        <div formArrayName='hobbies' *ngFor="let hobbie of hubbies.controls">
-          <button class="btn btn-success btn-sm">Add hubby</button> <hr>
-          <input type="text" formControlName='i'>
+        <div formArrayName='hobbies'>
+          <ng-container *ngFor="let hobby of hubbyArray; let i = index">
+            <div [formGroupName]='hobby'>
+            <div class="form-group">
+              <label for="hobby">Hobby</label>
+            <input id='hobby' type="text" class='form-control' formControlName=''>
+            </div>
+          </div>
+          </ng-container>
+          <button 
+          class="btn-sm btn btn-warning"
+          (click)='addHobby()'
+          >Add More Hobbies</button> <br><br>
+
         </div>
         <button class="btn btn-primary" type="submit">Submit</button>
       </form>
+      <pre>{{ signUpForm.value | json }}</pre>
     </div>
   </div>
 </div>
