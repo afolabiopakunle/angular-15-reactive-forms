@@ -13,6 +13,7 @@ export class AppComponent implements OnInit {
     { value: 3, title: 'Undisclosed' },
   ];
 
+  forbiddenNames = ['Siaka', 'Demurin']
   signUpForm: FormGroup;
 
   constructor() {}
@@ -20,7 +21,7 @@ export class AppComponent implements OnInit {
   ngOnInit() {
     this.signUpForm = new FormGroup({
       userData: new FormGroup({
-        username: new FormControl('', Validators.required),
+        username: new FormControl('', [Validators.required, this.forbiddenNamesValidator.bind(this)]),
         email: new FormControl('', [Validators.required, Validators.email]),
       }),
       gender: new FormControl(1),
@@ -32,7 +33,7 @@ export class AppComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.signUpForm.value);
+    console.log(this.signUpForm);
   }
 
   newHobby() {
@@ -52,5 +53,13 @@ export class AppComponent implements OnInit {
 
   get hubbyArray() {
     return this.signUpForm.get('hobbies') as FormArray
+  }
+
+  forbiddenNamesValidator(input): {[s: string]: boolean} {
+    if(this.forbiddenNames.indexOf(input) !== 1) {
+      return {'This is a forbidden name': true}
+    } else {
+      return null
+    }
   }
 }
